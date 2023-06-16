@@ -1,4 +1,4 @@
-public class ContaException extends Exception {
+public class ContaException extends RuntimeException {
     public ContaException(String message) {
         super(message);
     }

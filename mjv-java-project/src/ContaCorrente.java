@@ -8,18 +8,9 @@ public class ContaCorrente {
     private Double saldo;
     private Integer numeroConta;
     private Integer numeroAgencia;
-    private boolean ativa;
+    private boolean ativa = true;
     private String justificativa;
     private List<Transacao> transacaos = new ArrayList<>();
-
-
-    public ContaCorrente(Cliente cliente, Double saldo, Integer numeroConta, Integer numeroAgencia) {
-        this.cliente = cliente;
-        this.saldo = saldo;
-        this.numeroConta = numeroConta;
-        this.numeroAgencia = numeroAgencia;
-        this.ativa = true;
-    }
 
     public List<Transacao> consultarExtrato(LocalDate di, LocalDate df){
         return transacaos;
@@ -44,7 +35,7 @@ public class ContaCorrente {
 
     private void isConta(String msg) throws ContaException {
         if (isAtiva()) {
-            throw new ContaException("Conta com saldo insuficiente!");
+            throw new ContaException(msg);
         }else {
             throw new ContaException("Conta ja cancelada: "+ this.justificativa);
         }
@@ -54,13 +45,13 @@ public class ContaCorrente {
             transacaos.add(new Transacao(date, descricao, valor, tipo));
     }
 
-    public void transferir(ContaCorrente contaDestino, Double valor) throws Exception{
+    public void transferir(ContaCorrente contaDestino, Double valor) throws ContaException{
         if(saldo >= valor && isAtiva()){
             contaDestino.setSaldo(contaDestino.consultarSaldo() + valor);
             saldo -= valor;
             incluirTransaca(LocalDate.now(), "Transferência para conta "+contaDestino.cliente.getNome(), valor, Tipo.TRANSFERENCIA);
         }else{
-            isConta("Conta com saldo insuficiente!");
+            isConta("Conta "+this.cliente.getNome()+" com saldo insuficiente!");
         }
 
     }
@@ -72,6 +63,10 @@ public class ContaCorrente {
         return cliente;
     }
 
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
     }
@@ -80,8 +75,16 @@ public class ContaCorrente {
         return numeroConta;
     }
 
+    public void setNumeroConta(Integer numeroConta) {
+        this.numeroConta = numeroConta;
+    }
+
     public Integer getNumeroAgencia() {
         return numeroAgencia;
+    }
+
+    public void setNumeroAgencia(Integer numeroAgencia) {
+        this.numeroAgencia = numeroAgencia;
     }
 
     public boolean isAtiva() {
