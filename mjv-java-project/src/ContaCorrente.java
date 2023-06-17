@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class ContaCorrente {
@@ -12,8 +13,11 @@ public class ContaCorrente {
     private String justificativa;
     private List<Transacao> transacaos = new ArrayList<>();
 
-    public List<Transacao> consultarExtrato(LocalDate di, LocalDate df){
-        return transacaos;
+    public List<Transacao> consultarExtrato(LocalDate dataInicio, LocalDate dataFinal){
+        List<Transacao> extrato = transacaos.stream()
+                .filter( t -> t.getData().isAfter(dataInicio) && t.getData().isBefore(dataFinal))
+                .collect(Collectors.toList());
+        return extrato;
     }
 
     public void cancelarConta(String justificativa) throws ContaException {

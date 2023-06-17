@@ -36,8 +36,10 @@ public class Main {
             System.out.println("Saldo do Cliente 1: " + conta1.consultarSaldo() + "\n");
             System.out.println("Saldo do Cliente 2: " + conta2.consultarSaldo() + "\n");
 
-            List<Transacao> transacaos = conta1.consultarExtrato(LocalDate.now(), LocalDate.now());
-            System.out.println("transações: ");
+            LocalDate dataInicio = LocalDate.of(2023,06,01);
+            LocalDate dataFinal = LocalDate.of(2023,06,30);
+            List<Transacao> transacaos = conta1.consultarExtrato(dataInicio, dataFinal);
+            System.out.println("Transações feita nos dias "+dataInicio+" á "+dataFinal);
             for (Transacao transacao : transacaos) {
                 String extrato = String.format("Tipo: %s%n" +
                         "Data: %s %n" +
