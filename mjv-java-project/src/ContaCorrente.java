@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ContaCorrente {
     private Cliente cliente;
-    private Double saldo;
+    private Double saldo = 0.0;
     private Integer numeroConta;
     private Integer numeroAgencia;
     private boolean ativa = true;
@@ -47,7 +47,7 @@ public class ContaCorrente {
 
     public void transferir(ContaCorrente contaDestino, Double valor) throws ContaException{
         if(saldo >= valor && isAtiva()){
-            contaDestino.setSaldo(contaDestino.consultarSaldo() + valor);
+            contaDestino.depositar(valor);
             saldo -= valor;
             incluirTransaca(LocalDate.now(), "Transferência para conta "+contaDestino.cliente.getNome(), valor, Tipo.TRANSFERENCIA);
         }else{
@@ -67,8 +67,13 @@ public class ContaCorrente {
         this.cliente = cliente;
     }
 
-    public void setSaldo(Double saldo) {
-        this.saldo = saldo;
+    public void depositar(Double valor) throws ContaException{
+        if (isAtiva()) {
+            incluirTransaca(LocalDate.now(), "Deposito", valor, Tipo.DEPOSITO);
+            this.saldo += valor;
+        }else {
+            isConta("");
+        }
     }
 
     public Integer getNumeroConta() {

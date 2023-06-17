@@ -1,3 +1,3 @@
 public enum Tipo {
-    TRANSFERENCIA, SAQUE
+    TRANSFERENCIA, SAQUE, DEPOSITO
 }

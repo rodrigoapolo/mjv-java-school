@@ -9,13 +9,13 @@ public class Main {
 
         ContaCorrente conta1 = new ContaCorrente();
         conta1.setCliente(cliente1);
-        conta1.setSaldo(1000.0);
+        conta1.depositar(1000.0);
         conta1.setNumeroConta(654);
         conta1.setNumeroAgencia(115);
 
         ContaCorrente conta2 = new ContaCorrente();
         conta2.setCliente(cliente2);
-        conta2.setSaldo(500.0);
+        conta2.depositar(500.0);
         conta2.setNumeroConta(843);
         conta2.setNumeroAgencia(115);
 
